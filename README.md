@@ -26,7 +26,7 @@ Supplier management portal to provide a buyer/procurement proffesional with info
 
 ## Steps
 
-1) Use corporate Azure account or make a new Azure developer subscription.
-2) Setup Power Pages
+1) Check access to [portal.azure.com](https://portal.azure.com). Use corporate Azure account or [make a new Azure developer subscription](https://dev.to/andrewelans/how-i-enrolled-in-microsoft-365-developer-program-28m6). 
+2) Create a new Power Pages page.
 
 Content is in progress...
