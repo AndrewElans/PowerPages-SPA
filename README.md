@@ -4,6 +4,7 @@ Sample project of a Microsoft Power Pages Single Page Application with **no** "l
 
 ## Features
   - Fully controlled dependencies in Power Pages
+  - Sign-in with multiple accounts / switch accounts made easy without signout
   - Browser-based [Microsoft Authentication Library for JavaScript](https://github.com/AzureAD/microsoft-authentication-library-for-js/tree/dev/lib/msal-browser) authenticating with:
     - Azure AD
     - Dataverse (db behind Power Pages)
