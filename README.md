@@ -1,4 +1,4 @@
-# PowerPages-SPA
+# PowerPagesSPA
 
 Sample project of a Microsoft Power Pages Single Page Application with **no** "low code no code" principle. Provisioned with Vite and optional Node.js hosted as Azure Web App. Suitable for corporate environment with sensitive business data.
 
