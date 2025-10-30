@@ -24,7 +24,7 @@ Sample project of a Microsoft Power Pages Single Page Application with **no** "l
 
 ## References
   - [Default dependencies in Power Pages](https://dev.to/andrewelans/login-redirect-in-power-pages-spa-with-hash-and-query-params-4o5)
-  - 
+  - ...
 ## Sample project description
 
 Supplier management portal to provide a buyer/procurement proffesional with information on suppliers organization is dealing with. The portal will keep internal stakeholders updated with current supplier status including challenges, delays and quality issues supplier is experiencing in projects or other engagements, prices and lead times actual vs committed, legal issues, evaluation of suppliers and more. The aim of the portal is to make buyer's work easier and more efficient, improve bargaining power in negotiations with suppliers and help take right business decisions during supplier selection to maintain "5 rights of procurement".
@@ -36,7 +36,7 @@ Supplier management portal to provide a buyer/procurement proffesional with info
 3) ...
 4) ...
 
-
-10) [Set up Azure Cosmos DB with MSAL token](https://github.com/AndrewElans/PowerPagesSPA-CosmosDB)
+9) [Set up MSAL Browser](https://github.com/AndrewElans/PowerPagesSPA-MSAL-Browser)
+10) [Set up Azure Cosmos DB to work with the MSAL token](https://github.com/AndrewElans/PowerPagesSPA-CosmosDB)
 
 Content is in progress...
