@@ -9,6 +9,7 @@ Sample project of a Microsoft Power Pages Single Page Application with **no** "l
     - Azure AD
     - Dataverse (db behind Power Pages)
     - Azure Storage
+    - Azure Cosmos DB
   - Role-based access control to resources and content
   - Lightweight
   - Custom logger
