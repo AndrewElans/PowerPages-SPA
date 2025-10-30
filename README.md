@@ -33,6 +33,10 @@ Supplier management portal to provide a buyer/procurement proffesional with info
 
 1) Check access to [portal.azure.com](https://portal.azure.com). Use corporate Azure account or see how to [make a new Azure developer subscription](https://dev.to/andrewelans/how-i-enrolled-in-microsoft-365-developer-program-28m6). 
 2) Create a new Power Pages site in [make.powerpages.microsoft.com](make.powerpages.microsoft.com), see here how.
-3) 
+3) ...
+4) ...
+
+
+10) [Set up Azure Cosmos DB with MSAL token](https://github.com/AndrewElans/PowerPagesSPA-CosmosDB)
 
 Content is in progress...
