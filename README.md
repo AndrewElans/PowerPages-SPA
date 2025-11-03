@@ -42,7 +42,7 @@ Supplier management portal to provide a buyer/procurement proffesional with info
    - First time I will login to portal.azure.com with `andrew.elans@250101dev.onmicrosoft.com`, the system will ask me to setup MFA authentication with a phone app `Authenticator` that you should have installed prior
 2) Provision a new powerapps environment (take a note on language), power pages portal and set it up as explained here [dev.to/andrewelans/power-pages-spa-main-setup](https://dev.to/andrewelans/power-pages-spa-main-setup-2e0i)
 3) Create a new solution in make.powerapps.com [dev.to/andrewelans/power-pages-spa-components-part-1](https://dev.to/andrewelans/power-pages-spa-components-part-1-2oh6)
-6) Do some changes to default Power Pages components as per this post []()
+6) Do some changes to default Power Pages components as per this post [dev.to/andrewelans/power-pages-spa-components-part-2](https://dev.to/andrewelans/power-pages-spa-components-part-2-1d00) and this repo [github.com/AndrewElans/PowerPagesSPA-PowerPagesSetup](https://github.com/AndrewElans/PowerPagesSPA-PowerPagesSetup).
 7) 
 8) ...
 9) ...
