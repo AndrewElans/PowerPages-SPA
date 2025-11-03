@@ -30,16 +30,25 @@ Sample project of a Microsoft Power Pages Single Page Application with **no** "l
 Supplier management portal to provide a buyer/procurement proffesional with information on suppliers organization is dealing with. The portal will keep internal stakeholders updated with current supplier status including challenges, delays and quality issues supplier is experiencing in projects or other engagements, prices and lead times actual vs committed, legal issues, evaluation of suppliers and more. The aim of the portal is to make buyer's work easier and more efficient, improve bargaining power in negotiations with suppliers and help take right business decisions during supplier selection to maintain "5 rights of procurement".
 
 ## Steps
-
-1) Check access to [portal.azure.com](https://portal.azure.com). Use corporate Azure account or see how to [make a new Azure developer subscription](https://dev.to/andrewelans/how-i-enrolled-in-microsoft-365-developer-program-28m6). 
-2) Create a new Power Pages site in [make.powerpages.microsoft.com](make.powerpages.microsoft.com), see here how.
-3) ...
-4) ...
+1) Check if you have account in [portal.azure.com](https://portal.azure.com). Use corporate Azure account or see how to [make a new Azure developer subscription](https://dev.to/andrewelans/how-i-enrolled-in-microsoft-365-developer-program-28m6).
+   - Developer subscription can be created with any private email address / phone and credit card
+   - I created the subscription with email 250101dev@gmail.com
+   - When accessing portal.azure.com first time with this email, I see only one user there -> me
+   - My email in portal.azure.com looks like this `...blabla...EXT#@250101dev.onmicrosoft.com`
+   - I adjust the email to `andrew.elans@250101dev.onmicrosoft.com` -> this email I will use further to access:
+     - portal.azure.com
+     - make.powerapps.com
+     - make.powerpages.microsoft.com
+   - First time I will login to portal.azure.com with `andrew.elans@250101dev.onmicrosoft.com`, the system will ask me to setup MFA authentication with a phone app `Authenticator`
+2) With the same user Go to make.
+4) Create a new Power Pages site in [make.powerpages.microsoft.com](make.powerpages.microsoft.com), see here how.
 5) ...
 6) ...
 7) ...
-8) Provision mock json data
-9) [Set up MSAL Browser](https://github.com/AndrewElans/PowerPagesSPA-MSAL-Browser) repo in progress
-10) [Set up Azure Cosmos DB to work with the MSAL token](https://github.com/AndrewElans/PowerPagesSPA-CosmosDB)
+8) ...
+9) ...
+10) Provision mock json data
+11) [Set up MSAL Browser](https://github.com/AndrewElans/PowerPagesSPA-MSAL-Browser) repo in progress
+12) [Set up Azure Cosmos DB to work with the MSAL token](https://github.com/AndrewElans/PowerPagesSPA-CosmosDB)
 
 Content is in progress...
