@@ -103,6 +103,8 @@ Supplier management portal to provide a buyer/procurement proffesional with info
         - site-250101.powerappsportals.com/cat-pc.png
         - site-250101.powerappsportals.com/access-denied
         - site-250101.powerappsportals.com/_layout/tokenhtml -> blank page with single input on body
+      
+      When logged in to site-250101.powerappsportals.com you should see your user email on document.body.dataset.emailpowerpages.
 
 5. [Set up MSAL Browser and Vite](https://github.com/AndrewElans/PowerPagesSPA-MSAL-Vite).
 
