@@ -104,7 +104,7 @@ Supplier management portal to provide a buyer/procurement proffesional with info
         - site-250101.powerappsportals.com/access-denied
         - site-250101.powerappsportals.com/_layout/tokenhtml -> blank page with single input on body
 
-5. 
+5. [Set up MSAL Browser and Vite](https://github.com/AndrewElans/PowerPagesSPA-MSAL-Vite).
 
 6. ...
 
@@ -112,9 +112,11 @@ Supplier management portal to provide a buyer/procurement proffesional with info
 
 8. ...
 
-9. Provision mock json data
 
-10. [Set up MSAL Browser](https://github.com/AndrewElans/PowerPagesSPA-MSAL-Browser) repo in progress
+
+
+
+9. Provision mock json data
 
 11. [Set up Azure Cosmos DB to work with the MSAL token](https://github.com/AndrewElans/PowerPagesSPA-CosmosDB)
 
