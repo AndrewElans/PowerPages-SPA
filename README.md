@@ -81,7 +81,7 @@ Supplier management portal to provide a buyer/procurement proffesional with info
 
     After you have your env provisined, check this page [dev.to/andrewelans/power-pages-spa-main-setup](https://dev.to/andrewelans/power-pages-spa-main-setup-2e0i) for tweaking some things in App registration on portal.azure.com.
 
-3. Provision a new powerapps environment (take a note on language), power pages portal and set it up as explained here [dev.to/andrewelans/power-pages-spa-main-setup](https://dev.to/andrewelans/power-pages-spa-main-setup-2e0i).
+3. Step 2 is preffered over this step. Provision a new powerapps environment (take a note on language), power pages portal and set it up as explained here [dev.to/andrewelans/power-pages-spa-main-setup](https://dev.to/andrewelans/power-pages-spa-main-setup-2e0i).
 
 3. Create a new solution in make.powerapps.com [dev.to/andrewelans/power-pages-spa-components-part-1](https://dev.to/andrewelans/power-pages-spa-components-part-1-2oh6)
 4. Do some changes to default Power Pages components as per this post [dev.to/andrewelans/power-pages-spa-components-part-2](https://dev.to/andrewelans/power-pages-spa-components-part-2-1d00) and this repo [github.com/AndrewElans/PowerPagesSPA-PowerPagesSetup](https://github.com/AndrewElans/PowerPagesSPA-PowerPagesSetup).
