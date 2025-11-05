@@ -106,7 +106,7 @@ Supplier management portal to provide a buyer/procurement proffesional with info
       
       When logged in to site-250101.powerappsportals.com you should see your user email on document.body.dataset.emailpowerpages.
 
-5. [Set up MSAL Browser and Vite](https://github.com/AndrewElans/PowerPagesSPA-MSAL-Vite).
+5. Set up MSAL Browser, Vite and all other things here [github.com/AndrewElans/PowerPagesSPA-Complete](https://github.com/AndrewElans/PowerPagesSPA-Complete).
 
 6. ...
 
