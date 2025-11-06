@@ -127,13 +127,51 @@ Supplier management portal to provide a buyer/procurement proffesional with info
 
 5.  Organization of the supplier management portal
 
-    | Type                              | Accessible Pages/Routes/Functionality                    | Security Group       | Users                             |
-    |-----------------------------------|----------------------------------------------------------|----------------------|-----------------------------------|
-    | System Administrator              | Home<br>Find Supplier<br>Frame Agreements Write<br>Admin | SG-SYSTEM-ADMIN      | Andrew Elans                      |
-    | Procurement users                 | Home<br>Find Supplier<br>Frame Agreements Read           | SG-PROCUREMENT-ALL   | Bing Whatman<br>Gwenny Dinsell    |
-    | Frame Agreement Managers          | Home<br>Find Supplier<br>Frame Agreements Write          | SG-FA-OWNER          | Gwenny Dinsell                    |
-    | All other users                   | No access with request access form                       |                      | Essa Stuckes                      |
+    Access and content is provided based on the following grouping:
+
+    | Type                              | Accessible Pages/Routes/Functionality                    | Security Group       | Dataverse Team | Users                             |
+    |-----------------------------------|----------------------------------------------------------|----------------------|----------------|-----------------------------------|
+    | System Administrator              | Home<br>Find Supplier<br>Frame Agreements Write<br>Admin | SG-SYSTEM-ADMIN      | admin          | Andrew Elans                      |
+    | Procurement users                 | Home<br>Find Supplier<br>Frame Agreements Read           | SG-PROCUREMENT-ALL   | proc_all       | Bing Whatman<br>Gwenny Dinsell    |
+    | Frame Agreement Managers          | Home<br>Find Supplier<br>Frame Agreements Write          | SG-FA-OWNER          | fa_owner       | Gwenny Dinsell                    |
+    | All other tenant's users          | No access with request access form                       |                      | azure_all      |                                   |
     
+    Each page has a corresponding snipet. Snippets are stored in a new Dataverse table with the following structure:
+
+    | Name | az Val Admin | az Val Proc All | az Val FA Owner | az Val Azure All | az Val Shared |
+    |------|--------------|-----------------|-----------------|------------------|---------------|
+    | nav  | json content | json content    | json content    | json content     | json content  |
+
+    Each `az Val..` column has `Column security profile` set up.
+
+    Structure of `json content`:
+
+    ```json
+    {
+        "seq": 1,
+        "name": "az_valshared",
+        "snippets": [
+            {
+                "name": "_home",
+                "title": "Home",
+                "route": "/",
+                "hash": "",
+                "html": "<h1>Home</h1><script>console.log(\"hi from home page\")</script>"
+            }
+        ],
+        "divStr": "<li class=\"nav-item\"><button class=\"nav-link handler nav-home\" data-snippet=\"_home\">Home</button></li>",
+        "navbarModule": {
+            "name": "dynamic-02-navbar",
+            "fns": [
+                "snippetsFn",
+                "activateNavBtnFn"
+            ]
+        }
+    }
+
+    ```
+
+
 
 6.  Create Security Groups
 
