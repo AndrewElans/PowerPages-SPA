@@ -125,26 +125,26 @@ Supplier management portal to provide a buyer/procurement proffesional with info
 
     Dev Tools -> Network
 
-      - site-250101.powerappsportals.com/access-denied
+      - site-250101.powerappsportals.com/access-denied (with default deps)
         - 39 requests
         - 1.3 MB transferred
         - 4.8 MB resources (we can deduct the cat image from here to be objective)
 
-      - site-250101.powerappsportals.com
+      - site-250101.powerappsportals.com (w/o default deps)
         - 1 requests
         - 1.3 kB transferred
         - 382 B resources
     
     Dev Tools -> Performance
 
-      - site-250101.powerappsportals.com/access-denied
+      - site-250101.powerappsportals.com/access-denied (with default deps)
         - Scripting 501 ms
         - System 165 ms
         - Loading 18 ms
         - Rendering 14 ms
         - Painting 1 ms
       
-      - site-250101.powerappsportals.com
+      - site-250101.powerappsportals.com (w/o default deps)
         - System 19 ms
         - Rendering 7 ms
         - Scripting 2 ms
