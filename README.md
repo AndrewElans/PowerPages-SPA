@@ -35,36 +35,38 @@ Supplier management portal to provide a buyer/procurement proffesional with info
 ## Steps
 
 1. Check if you have account in [portal.azure.com](https://portal.azure.com). Use corporate Azure account or see how to [make a new Azure developer subscription](https://dev.to/andrewelans/how-i-enrolled-in-microsoft-365-developer-program-28m6) which can be created with any private email address / phone and credit card
-  
-  ### My experience
-  - I creat subscription with email 250101dev@gmail.com, phone and credit card
-  - When accessing portal.azure.com first time with this email, I see only a single user me with email `......#EXT@250101dev.onmicrosoft.com`
-  - I adjust the email to `andrew.elans@250101dev.onmicrosoft.com`
-  - This email I use further to access:
-    - admin.cloud.microsoft - your **main place** to manage Azure account and services:
-      - portal.azure.com
-      - entra.microsoft.com
-      - admin.powerplatform.microsoft.com
-      - make.powerapps.com
-      - make.powerpages.microsoft.com
 
-  - First time I login to portal.azure.com with `andrew.elans@250101dev.onmicrosoft.com`, the system will ask me to setup MFA authentication with a phone app `Authenticator` that you should have installed prior
+### My experience
 
-  - You get the following licences on your account:
-    - Microsoft Power Automate Free -> activated on your user
-    - Microsoft Power Apps for Developer -> activated on your user
-    - Power Pages vTrial for Makers -> **not** activated on your user
+- I creat subscription with email 250101dev@gmail.com, phone and credit card
+- When accessing portal.azure.com first time with this email, I see only a single user me with email `......#EXT@250101dev.onmicrosoft.com`
+- I adjust the email to `andrew.elans@250101dev.onmicrosoft.com`
+- This email I use further to access:
 
-2. Activate **Power Pages vTrial for Makers** licence
-    
+  - admin.cloud.microsoft - your **main place** to manage Azure account and services:
+    - portal.azure.com
+    - entra.microsoft.com
+    - admin.powerplatform.microsoft.com
+    - make.powerapps.com
+    - make.powerpages.microsoft.com
+
+- First time I login to portal.azure.com with `andrew.elans@250101dev.onmicrosoft.com`, the system will ask me to setup MFA authentication with a phone app `Authenticator` that you should have installed prior
+
+- You get the following licences on your account:
+  - Microsoft Power Automate Free -> activated on your user
+  - Microsoft Power Apps for Developer -> activated on your user
+  - Power Pages vTrial for Makers -> **not** activated on your user
+
+2.  Activate **Power Pages vTrial for Makers** licence
+
     This is preffered step over 3. Do it as explained here [learn.microsoft.com/en-us/power-pages/getting-started/trial-signup](https://learn.microsoft.com/en-us/power-pages/getting-started/trial-signup).
-    
+
     After filling out the form you get provisioned a power apps environment in admin.powerplatform.microsoft.com with name `PowerPagesTrial-xxxxxx` and Type `Trial` for 30 days.
 
     ### Difference between Trial and Developer environments
 
     Following step 2 you get Trial env which you can convert to `Production` that is a must to make you web site public, see here [learn.microsoft.com/en-us/power-pages/security/site-visibility](https://learn.microsoft.com/en-us/power-pages/security/site-visibility?tabs=new#difference-between-a-private-site-and-a-public-site). Only in public mode you get your public routes to work for MSAL redirect, see **Default pages with public access** here [dev.to/andrewelans/power-pages-spa-login-redirect-2g2n](https://dev.to/andrewelans/power-pages-spa-login-redirect-2g2n).
-    
+
     In step 3 you get a Developer env that you cannot convert to Production and therefore make a Power Pages site public. Trying to convert it in make.powerpowerpages.microsoft.com, the system is sending this req under the hood:
 
     `POST https://portalsitewide-nor.portal-infra.dynamics.com/api/v1/powerPortal/UpdateSiteVisibility?tenantId=GUID&portalId=GUID&siteVisibility=public`
@@ -73,51 +75,107 @@ Supplier management portal to provide a buyer/procurement proffesional with info
 
     ```json
     {
-        "Message": "Site visibility cannot be changed to public on developer environment.",
-        "ErrorCode": "D005",
-        "ErrorType": "User error"
+    	"Message": "Site visibility cannot be changed to public on developer environment.",
+    	"ErrorCode": "D005",
+    	"ErrorType": "User error"
     }
     ```
 
-    After you have your env provisined, check this page [dev.to/andrewelans/power-pages-spa-main-setup](https://dev.to/andrewelans/power-pages-spa-main-setup-2e0i) for tweaking some things in App registration on portal.azure.com.
+    After you have your env provisined, check this page [dev.to/andrewelans/power-pages-spa-main-setup](https://dev.to/andrewelans/power-pages-spa-main-setup-2e0i) for adjusting authentication and redirectUri in App registration on portal.azure.com.
 
-3. Step 2 is preffered over this step. Provision a new powerapps environment (take a note on language), power pages portal and set it up as explained here [dev.to/andrewelans/power-pages-spa-main-setup](https://dev.to/andrewelans/power-pages-spa-main-setup-2e0i).
+3.  Step 2 is preffered over this step. Provision a new powerapps environment (take a note on language), power pages portal and set it up as explained here [dev.to/andrewelans/power-pages-spa-main-setup](https://dev.to/andrewelans/power-pages-spa-main-setup-2e0i).
 
-3. Create a new solution in make.powerapps.com [dev.to/andrewelans/power-pages-spa-components-part-1](https://dev.to/andrewelans/power-pages-spa-components-part-1-2oh6)
+4.  Create 3 guest users
 
-4. Do some changes to default Power Pages components as per this post [dev.to/andrewelans/power-pages-spa-components-part-2](https://dev.to/andrewelans/power-pages-spa-components-part-2-1d00) and this repo [github.com/AndrewElans/PowerPagesSPA-PowerPagesSetup](https://github.com/AndrewElans/PowerPagesSPA-PowerPagesSetup).
+    Go to portal.azure.com.
+
+    ### Users
+
+    Add 3 new dummy users with User type Guest.
+
+    - Bing Whatman
+    - Gwenny Dinsell 
+    - Essa Stuckes
+
+    When created, remember temporary passwords. When logging in with these users first time, you would need to update the password using the temporary one.
+
+    Use permanent password `DummyGuest1` for all users.
+
+    ### Re MFA
+
+    Type Guest will have limited permissions in portal.azure.com and will not be required for MFA-authentication on power pages. However, Guests will still be requested to authenticate with MFA if they try to access:
+
+    - Azure portal
+    - Entra admin center
+    - Intune admin center
+    - M365 Admin center
+
+    More on MFA:
+
+    - [learn.microsoft.com/en-us/entra/identity/authentication/concept-mandatory-multifactor-authentication](https://learn.microsoft.com/en-us/entra/identity/authentication/concept-mandatory-multifactor-authentication?tabs=dotnet).
+    - [portal.azure.com/#view/Microsoft_Azure_Resources/MfaSettings.ReactView](https://portal.azure.com/#view/Microsoft_Azure_Resources/MfaSettings.ReactView).
+
+    ### Users -> User settings
+
+    Set most restrictive policy on users including guests.
+
+    - Guest user access -> Activate `Guest user access is restricted to properties and memberships of their own directory objects (most restrictive)`
+    - Restrict access to Microsoft Entra admin center ON
+    - Show keep user signed in OFF
+    - Allow users to connect their work or school account with LinkedIn No
+    - External collaboration settings -> Guest invite restrictions -> No one in the organization can invite guest users including admins (most restrictive) ON
+
+5.  Organization of the supplier management portal
+
+    | Type                              | Accessible Pages/Routes/Functionality                    | Security Group       | Users                             |
+    |-----------------------------------|----------------------------------------------------------|----------------------|-----------------------------------|
+    | System Administrator              | Home<br>Find Supplier<br>Frame Agreements Write<br>Admin | SG-SYSTEM-ADMIN      | Andrew Elans                      |
+    | Procurement users                 | Home<br>Find Supplier<br>Frame Agreements Read           | SG-PROCUREMENT-ALL   | Bing Whatman<br>Gwenny Dinsell    |
+    | Frame Agreement Managers          | Home<br>Find Supplier<br>Frame Agreements Write          | SG-FA-OWNER          | Gwenny Dinsell                    |
+    | All other users                   | No access with request access form                       |                      | Essa Stuckes                      |
     
+
+6.  Create Security Groups
+
+    In portal.azure.com -> Groups create corresponding groups and add members.
+
+7.  Create a new solution in make.powerapps.com [dev.to/andrewelans/power-pages-spa-components-part-1](https://dev.to/andrewelans/power-pages-spa-components-part-1-2oh6)
+
+8.  Do some changes to default Power Pages components as per this post [dev.to/andrewelans/power-pages-spa-components-part-2](https://dev.to/andrewelans/power-pages-spa-components-part-2-1d00) and this repo [github.com/AndrewElans/PowerPagesSPA-PowerPagesSetup](https://github.com/AndrewElans/PowerPagesSPA-PowerPagesSetup).
+
     ## Testing portal urls
-    
+
     You should now have a working web site with the following behaviour when requesting urls in a new inkognito window (provide you have enabled Public mode):
-      
-      - Redirect to login.microsoftonline.com:
-        - site-250101.powerappsportals.com
-        - site-250101.powerappsportals.com/dynamic-assets
-        - site-250101.powerappsportals.com/static-assets
-        - site-250101.powerappsportals.com/signin
 
-      - Render Page Not Found:
-        - site-250101.powerappsportals.com/page-not-found
-        - site-250101.powerappsportals.com/lkjjkdjfkj
-
-      - Render corresponding content:
-        - site-250101.powerappsportals.com/cat-pc.png
-        - site-250101.powerappsportals.com/access-denied
-        - site-250101.powerappsportals.com/_layout/tokenhtml -> blank page with single input on body
-
-    ### Checking dependencies
-      
-    Log in to your portal with your user. You will see your email on document.body.dataset.emailpowerpages. 
-    
-    Open Dev Tools -> Sources -> Page. 
-
-    On all these pages the sources will **not** have any of the default power pages dependencies:
+    - Redirect to login.microsoftonline.com:
 
       - site-250101.powerappsportals.com
       - site-250101.powerappsportals.com/dynamic-assets
       - site-250101.powerappsportals.com/static-assets
+      - site-250101.powerappsportals.com/signin
+
+    - Render Page Not Found:
+
       - site-250101.powerappsportals.com/page-not-found
+      - site-250101.powerappsportals.com/lkjjkdjfkj
+
+    - Render corresponding content:
+      - site-250101.powerappsportals.com/cat-pc.png
+      - site-250101.powerappsportals.com/access-denied
+      - site-250101.powerappsportals.com/\_layout/tokenhtml -> blank page with single input on body
+
+    ### Checking dependencies
+
+    Log in to your portal with your user. You will see your email on document.body.dataset.emailpowerpages.
+
+    Open Dev Tools -> Sources -> Page.
+
+    On all these pages the sources will **not** have any of the default power pages dependencies:
+
+    - site-250101.powerappsportals.com
+    - site-250101.powerappsportals.com/dynamic-assets
+    - site-250101.powerappsportals.com/static-assets
+    - site-250101.powerappsportals.com/page-not-found
 
     Go to `site-250101.powerappsportals.com/access-denied` see all default dependencies loaded and compare to our simplest setup.
 
@@ -125,30 +183,32 @@ Supplier management portal to provide a buyer/procurement proffesional with info
 
     Dev Tools -> Network
 
-      - site-250101.powerappsportals.com/access-denied (with default deps)
-        - 39 requests
-        - 1.3 MB transferred
-        - 4.8 MB resources (we can deduct the cat image from here to be objective)
+    - site-250101.powerappsportals.com/access-denied (with default deps)
 
-      - site-250101.powerappsportals.com (w/o default deps)
-        - 1 requests
-        - 1.3 kB transferred
-        - 382 B resources
-    
+      - 39 requests
+      - 1.3 MB transferred
+      - 4.8 MB resources (we can deduct the cat image from here to be objective)
+
+    - site-250101.powerappsportals.com (w/o default deps)
+      - 1 requests
+      - 1.3 kB transferred
+      - 382 B resources
+
     Dev Tools -> Performance
 
-      - site-250101.powerappsportals.com/access-denied (with default deps)
-        - Scripting 501 ms
-        - System 165 ms
-        - Loading 18 ms
-        - Rendering 14 ms
-        - Painting 1 ms
-      
-      - site-250101.powerappsportals.com (w/o default deps)
-        - System 19 ms
-        - Rendering 7 ms
-        - Scripting 2 ms
-    
+    - site-250101.powerappsportals.com/access-denied (with default deps)
+
+      - Scripting 501 ms
+      - System 165 ms
+      - Loading 18 ms
+      - Rendering 14 ms
+      - Painting 1 ms
+
+    - site-250101.powerappsportals.com (w/o default deps)
+      - System 19 ms
+      - Rendering 7 ms
+      - Scripting 2 ms
+
     And these are very simple pages!
 
     ## Difference between this setup and default Microsoft Power Pages SPA
@@ -158,39 +218,36 @@ Supplier management portal to provide a buyer/procurement proffesional with info
     Let's convert our site into the default SPA and see the difference. To do this we add to [settings](https://github.com/AndrewElans/PowerPagesSPA-PowerPagesSetup/blob/main/Site%20Settings/settings.md) `CodeSite/Enabled` set to `true`, resync and compare functionality on the same urls in inkognito.
 
     - Redirect to login.microsoftonline.com:
-        - site-250101.powerappsportals.com *no changes*
-        - site-250101.powerappsportals.com/dynamic-assets *no changes*
-        - site-250101.powerappsportals.com/static-assets *no changes*
-        - site-250101.powerappsportals.com/signin *no changes*
+
+      - site-250101.powerappsportals.com _no changes_
+      - site-250101.powerappsportals.com/dynamic-assets _no changes_
+      - site-250101.powerappsportals.com/static-assets _no changes_
+      - site-250101.powerappsportals.com/signin _no changes_
 
     - Render Page Not Found:
-      - site-250101.powerappsportals.com/page-not-found *no changes*
-      - site-250101.powerappsportals.com/lkjjkdjfkj **changes**: all default dependences are loaded. This behaviour will have undesired implication on our routing. 
+
+      - site-250101.powerappsportals.com/page-not-found _no changes_
+      - site-250101.powerappsportals.com/lkjjkdjfkj **changes**: all default dependences are loaded. This behaviour will have undesired implication on our routing.
 
     - Render corresponding content:
-      - site-250101.powerappsportals.com/cat-pc.png *no changes*
-      - site-250101.powerappsportals.com/access-denied *no changes*
-      - site-250101.powerappsportals.com/_layout/tokenhtml *no changes*
+      - site-250101.powerappsportals.com/cat-pc.png _no changes_
+      - site-250101.powerappsportals.com/access-denied _no changes_
+      - site-250101.powerappsportals.com/\_layout/tokenhtml _no changes_
 
+9.  Add defaut logging.
 
-5. Add defaut logging. 
+10. Add security groups and create snippets.
 
-6. Add security groups and create snippets.
+11. [Set up MSAL Browser and Vite]() coming...
 
-5. [Set up MSAL Browser and Vite]() coming...
+12. ...
 
-6. ...
+13. ...
 
-7. ...
+14. ...
 
-8. ...
+15. Provision mock json data
 
-
-
-
-
-9. Provision mock json data
-
-11. [Set up Azure Cosmos DB to work with the MSAL token](https://github.com/AndrewElans/PowerPagesSPA-CosmosDB)
+16. [Set up Azure Cosmos DB to work with the MSAL token](https://github.com/AndrewElans/PowerPagesSPA-CosmosDB)
 
 Content is in progress...
