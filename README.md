@@ -132,13 +132,13 @@ Supplier management portal to provide a buyer/procurement proffesional with info
     | Type                              | Accessible Pages/Routes/Functionality                    | Security Group       | Dataverse Team | Users                             |
     |-----------------------------------|----------------------------------------------------------|----------------------|----------------|-----------------------------------|
     | System Administrator              | Home<br>Find Supplier<br>Frame Agreements Write<br>Admin | SG-SYSTEM-ADMIN      | admin          | Andrew Elans                      |
-    | Procurement users                 | Home<br>Find Supplier<br>Frame Agreements Read           | SG-PROCUREMENT-ALL   | proc_all       | Bing Whatman<br>Gwenny Dinsell    |
-    | Frame Agreement Managers          | Home<br>Find Supplier<br>Frame Agreements Write          | SG-FA-OWNER          | fa_owner       | Gwenny Dinsell                    |
-    | All other tenant's users          | No access with request access form                       |                      | azure_all      |                                   |
+    | Procurement users                 | Home<br>Find Supplier<br>Frame Agreements Read           | SG-PROCUREMENT-ALL   | procall        | Bing Whatman<br>Gwenny Dinsell    |
+    | Frame Agreement Managers          | Home<br>Find Supplier<br>Frame Agreements Write          | SG-FA-OWNER          | faowner        | Gwenny Dinsell                    |
+    | All other tenant's users          | No access with request access form                       |                      | azure          |                                   |
     
     Each page has a corresponding snipet. Snippets are stored in a new Dataverse table with the following structure:
 
-    | Name | az Val Admin | az Val Proc All | az Val FA Owner | az Val Azure All | az Val Shared |
+    | Name | az Val Admin | az Val ProcAll  | az Val FAOwner  | az Val Azure     | az Val Shared |
     |------|--------------|-----------------|-----------------|------------------|---------------|
     | nav  | json content | json content    | json content    | json content     | json content  |
 
@@ -171,7 +171,7 @@ Supplier management portal to provide a buyer/procurement proffesional with info
 
     ```
 
-
+    *To be continued...*
 
 6.  Create Security Groups
 
@@ -271,6 +271,57 @@ Supplier management portal to provide a buyer/procurement proffesional with info
       - site-250101.powerappsportals.com/cat-pc.png _no changes_
       - site-250101.powerappsportals.com/access-denied _no changes_
       - site-250101.powerappsportals.com/\_layout/tokenhtml _no changes_
+
+9. Add table `az Snippet`
+
+    Go to make.powerapps.com -> your env -> Tables -> New table -> Table (advanced properties)
+
+    - Display name `az Snippet`
+    - Schema name `az_Snippet`
+    - Primary column: 
+        - Display name `az Name`
+        - Schema name `az_Name`
+
+    Add new columns az Val Admin, az Val ProcAll, az Val FAOwner, az Val Azure, az Val Shared with:
+    
+    - Data type `Multiple lines of text`
+    - Maximum character count 10000
+    - Enable column security ON (except for az Val Azure)
+    - Adjust Schema name to format `az_Val...`
+
+    Open Forms on this table -> select form Information (Main) -> Edit -> add Multiline text with component `Edit This Monaco editor is used in Power Pages Management App` for each of the created columns. I will show in a video...
+
+10. Add Snippets form on Power Pages Management app
+
+
+
+10. Add this form to 
+
+10. Setup Dataverse 
+
+    Go to admin.powerplatform.microsoft.com -> your env -> Settings
+    
+    ### Users + Permissions
+
+    - Business units -> I have one with name `org459277b5` -> open -> edit -> rename to `azure`
+    
+    - Teams 
+        - delete all default teams present there except the one named `azure`
+        - create new teams with as defined in the step 5 table with 
+            - Team name as in column `Dataverse Team`
+            - Team type `Microsoft Entra ID Security Group`
+            - Group name as in column `Security Group`
+            - Membership type `Members and guests`
+        
+
+    ### 
+
+
+
+
+
+
+
 
 9.  Add defaut logging.
 
