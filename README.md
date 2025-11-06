@@ -170,7 +170,7 @@ Supplier management portal to provide a buyer/procurement proffesional with info
     - Render corresponding content:
       - site-250101.powerappsportals.com/cat-pc.png *no changes*
       - site-250101.powerappsportals.com/access-denied *no changes*
-      - site-250101.powerappsportals.com/_layout/tokenhtml -> blank page with single input on body
+      - site-250101.powerappsportals.com/_layout/tokenhtml *no changes*
 
 5. [Set up MSAL Browser and Vite]() coming...
 
