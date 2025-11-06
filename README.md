@@ -172,6 +172,11 @@ Supplier management portal to provide a buyer/procurement proffesional with info
       - site-250101.powerappsportals.com/access-denied *no changes*
       - site-250101.powerappsportals.com/_layout/tokenhtml *no changes*
 
+
+5. Add defaut logging. 
+
+6. Add security groups and create snippets.
+
 5. [Set up MSAL Browser and Vite]() coming...
 
 6. ...
