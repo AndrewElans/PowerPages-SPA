@@ -106,7 +106,6 @@ Supplier management portal to provide a buyer/procurement proffesional with info
         - site-250101.powerappsportals.com/access-denied
         - site-250101.powerappsportals.com/_layout/tokenhtml -> blank page with single input on body
 
-<<<<<<< HEAD
     ### Checking dependencies
       
     Log in to your portal with your user. You will see your email on document.body.dataset.emailpowerpages. 
@@ -174,9 +173,6 @@ Supplier management portal to provide a buyer/procurement proffesional with info
       - site-250101.powerappsportals.com/_layout/tokenhtml -> blank page with single input on body
 
 5. [Set up MSAL Browser and Vite]() coming...
-=======
-5. Set up MSAL Browser, Vite and all other things here [github.com/AndrewElans/PowerPagesSPA-Complete](https://github.com/AndrewElans/PowerPagesSPA-Complete).
->>>>>>> 8b111595308e9c5eae4a73fc7c6693ab668a5d03
 
 6. ...
 
