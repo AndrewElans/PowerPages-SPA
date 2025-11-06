@@ -87,6 +87,8 @@ Supplier management portal to provide a buyer/procurement proffesional with info
 
 4. Do some changes to default Power Pages components as per this post [dev.to/andrewelans/power-pages-spa-components-part-2](https://dev.to/andrewelans/power-pages-spa-components-part-2-1d00) and this repo [github.com/AndrewElans/PowerPagesSPA-PowerPagesSetup](https://github.com/AndrewElans/PowerPagesSPA-PowerPagesSetup).
     
+    ## Testing portal urls
+    
     You should now have a working web site with the following behaviour when requesting urls in a new inkognito window (provide you have enabled Public mode):
       
       - Redirect to login.microsoftonline.com:
@@ -103,10 +105,74 @@ Supplier management portal to provide a buyer/procurement proffesional with info
         - site-250101.powerappsportals.com/cat-pc.png
         - site-250101.powerappsportals.com/access-denied
         - site-250101.powerappsportals.com/_layout/tokenhtml -> blank page with single input on body
-      
-      When logged in to site-250101.powerappsportals.com you should see your user email on document.body.dataset.emailpowerpages.
 
-5. [Set up MSAL Browser and Vite](https://github.com/AndrewElans/PowerPagesSPA-MSAL-Vite).
+    ### Checking dependencies
+      
+    Log in to your portal with your user. You will see your email on document.body.dataset.emailpowerpages. 
+    
+    Open Dev Tools -> Sources -> Page. 
+
+    On all these pages the sources will **not** have any of the default power pages dependencies:
+
+      - site-250101.powerappsportals.com
+      - site-250101.powerappsportals.com/dynamic-assets
+      - site-250101.powerappsportals.com/static-assets
+      - site-250101.powerappsportals.com/page-not-found
+
+    Go to `site-250101.powerappsportals.com/access-denied` see all default dependencies loaded and compare to our simplest setup.
+
+    ### Performance
+
+    Dev Tools -> Network
+
+      - site-250101.powerappsportals.com/access-denied
+        - 39 requests
+        - 1.3 MB transferred
+        - 4.8 MB resources (we can deduct the cat image from here to be objective)
+
+      - site-250101.powerappsportals.com
+        - 1 requests
+        - 1.3 kB transferred
+        - 382 B resources
+    
+    Dev Tools -> Performance
+
+      - site-250101.powerappsportals.com/access-denied
+        - Scripting 501 ms
+        - System 165 ms
+        - Loading 18 ms
+        - Rendering 14 ms
+        - Painting 1 ms
+      
+      - site-250101.powerappsportals.com
+        - System 19 ms
+        - Rendering 7 ms
+        - Scripting 2 ms
+    
+    And these are very simple pages!
+
+    ## Difference between this setup and default Microsoft Power Pages SPA
+
+    Microsoft now provides SPA functionality as explained here [learn.microsoft.com/en-us/power-pages/configure/create-code-sites](https://learn.microsoft.com/en-us/power-pages/configure/create-code-sites).
+
+    Let's convert our site into the default SPA and see the difference. To do this we add to [settings](https://github.com/AndrewElans/PowerPagesSPA-PowerPagesSetup/blob/main/Site%20Settings/settings.md) `CodeSite/Enabled` set to `true`, resync and compare functionality on the same urls in inkognito.
+
+    - Redirect to login.microsoftonline.com:
+        - site-250101.powerappsportals.com *no changes*
+        - site-250101.powerappsportals.com/dynamic-assets *no changes*
+        - site-250101.powerappsportals.com/static-assets *no changes*
+        - site-250101.powerappsportals.com/signin *no changes*
+
+    - Render Page Not Found:
+      - site-250101.powerappsportals.com/page-not-found *no changes*
+      - site-250101.powerappsportals.com/lkjjkdjfkj **changes**: all default dependences are loaded. This behaviour will have undesired implication on our routing. 
+
+    - Render corresponding content:
+      - site-250101.powerappsportals.com/cat-pc.png *no changes*
+      - site-250101.powerappsportals.com/access-denied *no changes*
+      - site-250101.powerappsportals.com/_layout/tokenhtml -> blank page with single input on body
+
+5. [Set up MSAL Browser and Vite]() coming...
 
 6. ...
 
