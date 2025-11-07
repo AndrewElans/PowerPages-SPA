@@ -94,12 +94,29 @@ Supplier management portal to provide a buyer/procurement proffesional with info
     Add 3 new dummy users with User type Guest.
 
     - Bing Whatman
-    - Gwenny Dinsell 
+    - Gwenny Dinsell
     - Essa Stuckes
 
     When created, remember temporary passwords. When logging in with these users first time, you would need to update the password using the temporary one.
 
     Use permanent password `DummyGuest1` for all users.
+
+    ### Assing Power Apps licence to these user
+
+    When a user does not have a licence, he will not appear as a user in Dataverse (Default Business unit and default Team). As a consequenc, trying to send a simple query like this `https://250101.api.crm19.dynamics.com/api/data/v9.2/WhoAmI ` will return a `403 Forbidden` error:
+
+    ```json
+    {
+    	"error": {
+    		"code": "0x80072560",
+    		"message": "The user is not a member of the organization."
+    	}
+    }
+    ```
+    Go to admin.microsoft.com -> Home -> find that these new users in Licences column has `Unlicensed` -> click on each user's `...` -> assing `Microsoft Power Apps for Developer`.
+    Go to admin.powerplatform.microsoft.com -> your env -> Settings -> Users -> click Add user -> and add new users one by one. 
+
+    You can also do this in bulk with Power Automate as explained in this blog [matthewdevaney.com/force-sync-users-from-entra-security-group-to-dataverse-team](https://www.matthewdevaney.com/force-sync-users-from-entra-security-group-to-dataverse-team/).
 
     ### Re MFA
 
@@ -129,18 +146,18 @@ Supplier management portal to provide a buyer/procurement proffesional with info
 
     Access and content is provided based on the following grouping:
 
-    | Type                              | Accessible Pages/Routes/Functionality                    | Security Group       | Dataverse Team | Users                             |
-    |-----------------------------------|----------------------------------------------------------|----------------------|----------------|-----------------------------------|
-    | System Administrator              | Home<br>Find Supplier<br>Frame Agreements Write<br>Admin | SG-SYSTEM-ADMIN      | admin          | Andrew Elans                      |
-    | Procurement users                 | Home<br>Find Supplier<br>Frame Agreements Read           | SG-PROCUREMENT-ALL   | procall        | Bing Whatman<br>Gwenny Dinsell    |
-    | Frame Agreement Managers          | Home<br>Find Supplier<br>Frame Agreements Write          | SG-FA-OWNER          | faowner        | Gwenny Dinsell                    |
-    | All other tenant's users          | No access with request access form                       |                      | azure          |                                   |
-    
+    | Type                     | Accessible Pages/Routes/Functionality                    | Security Group     | Dataverse Team | Users                          |
+    | ------------------------ | -------------------------------------------------------- | ------------------ | -------------- | ------------------------------ |
+    | System Administrator     | Home<br>Find Supplier<br>Frame Agreements Write<br>Admin | SG-SYSTEM-ADMIN    | admin          | Andrew Elans                   |
+    | Procurement users        | Home<br>Find Supplier<br>Frame Agreements Read           | SG-PROCUREMENT-ALL | procall        | Bing Whatman<br>Gwenny Dinsell |
+    | Frame Agreement Managers | Home<br>Find Supplier<br>Frame Agreements Write          | SG-FA-OWNER        | faowner        | Gwenny Dinsell                 |
+    | All other tenant's users | No access with request access form                       |                    | azure          |                                |
+
     Each page has a corresponding snipet. Snippets are stored in a new Dataverse table with the following structure:
 
-    | Name | az Val Admin | az Val ProcAll  | az Val FAOwner  | az Val Azure     | az Val Common |
-    |------|--------------|-----------------|-----------------|------------------|---------------|
-    | nav  | json content | json content    | json content    | json content     | json content  |
+    | Name | az Val Admin | az Val ProcAll | az Val FAOwner | az Val Azure | az Val Common |
+    | ---- | ------------ | -------------- | -------------- | ------------ | ------------- |
+    | nav  | json content | json content   | json content   | json content | json content  |
 
     Each `az Val..` column has `Column security profile` set up.
 
@@ -148,30 +165,26 @@ Supplier management portal to provide a buyer/procurement proffesional with info
 
     ```json
     {
-        "seq": 1,
-        "name": "az_valshared",
-        "snippets": [
-            {
-                "name": "_home",
-                "title": "Home",
-                "route": "/",
-                "hash": "",
-                "html": "<h1>Home</h1><script>console.log(\"hi from home page\")</script>"
-            }
-        ],
-        "divStr": "<li class=\"nav-item\"><button class=\"nav-link handler nav-home\" data-snippet=\"_home\">Home</button></li>",
-        "navbarModule": {
-            "name": "dynamic-02-navbar",
-            "fns": [
-                "snippetsFn",
-                "activateNavBtnFn"
-            ]
-        }
+    	"seq": 1,
+    	"name": "az_valshared",
+    	"snippets": [
+    		{
+    			"name": "_home",
+    			"title": "Home",
+    			"route": "/",
+    			"hash": "",
+    			"html": "<h1>Home</h1><script>console.log(\"hi from home page\")</script>"
+    		}
+    	],
+    	"divStr": "<li class=\"nav-item\"><button class=\"nav-link handler nav-home\" data-snippet=\"_home\">Home</button></li>",
+    	"navbarModule": {
+    		"name": "dynamic-02-navbar",
+    		"fns": ["snippetsFn", "activateNavBtnFn"]
+    	}
     }
-
     ```
 
-    *To be continued...*
+    _To be continued..._
 
 6.  Create Security Groups
 
@@ -272,29 +285,29 @@ Supplier management portal to provide a buyer/procurement proffesional with info
       - site-250101.powerappsportals.com/access-denied _no changes_
       - site-250101.powerappsportals.com/\_layout/tokenhtml _no changes_
 
-9. Add table `az Snippet`
+9.  Add table `az Snippet`
 
     Go to make.powerapps.com -> your env -> Tables -> New table -> Table (advanced properties)
 
     - Display name `az Snippet`
     - Schema name `az_Snippet`
-    - Primary column: 
-        - Display name `az Name`
-        - Schema name `az_Name`
+    - Primary column:
+      - Display name `az Name`
+      - Schema name `az_Name`
 
     Add new columns `az Val Admin`, `az Val ProcAll`, `az Val FAOwner`, `az Val Azure`, `az Val Common` with:
-    
+
     - Data type `Multiple lines of text`
     - Maximum character count 10000
     - Enable column security ON (except for az Val Azure)
     - Adjust Schema name to format `az_Val...`
 
-    Open Forms on this table -> select form Information (Main) -> Edit -> add Multiline text with component `Edit This Monaco editor is used in Power Pages Management App` for each of the created columns. 
-    
-    *Not complete description. I will show in a video*
+    Open Forms on this table -> select form Information (Main) -> Edit -> add Multiline text with component `Edit This Monaco editor is used in Power Pages Management App` for each of the created columns.
 
-10. Edit Power Pages Management app 
-    
+    _Not complete description. I will show in a video_
+
+10. Edit Power Pages Management app
+
     Go to make.powerapps.com -> Apps -> Power Pages Management -> Edit.
 
     ### Add aa Snippets
@@ -303,8 +316,8 @@ Supplier management portal to provide a buyer/procurement proffesional with info
 
     Now we can add and edit snippets directly in the app.
 
-    ### Add Teams 
-    
+    ### Add Teams
+
     Select `aa Snippets form` added just now -> click on top `Add page` -> Dataverse table -> find and select `Team` -> Add
 
     Click `Save and publish` on top right.
@@ -312,7 +325,7 @@ Supplier management portal to provide a buyer/procurement proffesional with info
 11. Create user views
 
     We will make custom user views to be able to call userQuery with Web API:
-    
+
     - Teams user a member of
     - Snippets user has access to
 
@@ -325,25 +338,26 @@ Supplier management portal to provide a buyer/procurement proffesional with info
     Run this query in the browser `https://250101.api.crm19.dynamics.com/api/data/v9.2/teams?userQuery=a49fb75b-bdbb-f011-bbd3-6045bdeaa0cd`.
 
     Response:
+
     ```json
     {
-        "@odata.context": "https://250101.api.crm19.dynamics.com/api/data/v9.2/$metadata#teams(name,teamid,teamtype,ownerid)",
-        "value": [
-            {
-            "@odata.etag": "W/\"2012344\"",
-            "ownerid": "ac077676-1fbb-f011-bbd3-6045bdeaa0cd",
-            "teamtype": 2,
-            "name": "admin",
-            "teamid": "ac077676-1fbb-f011-bbd3-6045bdeaa0cd"
-            },
-            {
-            "@odata.etag": "W/\"2011269\"",
-            "ownerid": "da4f12c4-c4b6-f011-bbd3-002248dc6fd6",
-            "teamtype": 0,
-            "name": "azure",
-            "teamid": "da4f12c4-c4b6-f011-bbd3-002248dc6fd6"
-            }
-        ]
+    	"@odata.context": "https://250101.api.crm19.dynamics.com/api/data/v9.2/$metadata#teams(name,teamid,teamtype,ownerid)",
+    	"value": [
+    		{
+    			"@odata.etag": "W/\"2012344\"",
+    			"ownerid": "ac077676-1fbb-f011-bbd3-6045bdeaa0cd",
+    			"teamtype": 2,
+    			"name": "admin",
+    			"teamid": "ac077676-1fbb-f011-bbd3-6045bdeaa0cd"
+    		},
+    		{
+    			"@odata.etag": "W/\"2011269\"",
+    			"ownerid": "da4f12c4-c4b6-f011-bbd3-002248dc6fd6",
+    			"teamtype": 0,
+    			"name": "azure",
+    			"teamid": "da4f12c4-c4b6-f011-bbd3-002248dc6fd6"
+    		}
+    	]
     }
     ```
 
@@ -356,60 +370,53 @@ Supplier management portal to provide a buyer/procurement proffesional with info
     Run this query in the browser `https://250101.api.crm19.dynamics.com/api/data/v9.2/aa_snippets?userQuery=f810968d-c7bb-f011-bbd3-6045bdeaa0cd`.
 
     Response:
+
     ```json
     {
-        "@odata.context": "https://250101.api.crm19.dynamics.com/api/data/v9.2/$metadata#aa_snippets(statecode,aa_snippetid,aa_name,aa_valadmin,aa_valazure,aa_valcommon,aa_valfaowner,aa_valprocall)",
-        "value": [
-            {
-            "@odata.etag": "W/\"2090370\"",
-            "aa_name": "nav",
-            "statecode": 0,
-            "aa_snippetid": "270797bc-c7bb-f011-bbd3-6045bdeaa0cd"
-            }
-        ]
+    	"@odata.context": "https://250101.api.crm19.dynamics.com/api/data/v9.2/$metadata#aa_snippets(statecode,aa_snippetid,aa_name,aa_valadmin,aa_valazure,aa_valcommon,aa_valfaowner,aa_valprocall)",
+    	"value": [
+    		{
+    			"@odata.etag": "W/\"2090370\"",
+    			"aa_name": "nav",
+    			"statecode": 0,
+    			"aa_snippetid": "270797bc-c7bb-f011-bbd3-6045bdeaa0cd"
+    		}
+    	]
     }
     ```
 
-10. Setup Dataverse 
+12. Setup Dataverse
 
     Go to admin.powerplatform.microsoft.com -> your env -> Settings
-    
+
     ### Users + Permissions
 
     - Business units -> I have one with name `org459277b5` -> open -> edit -> rename to `azure`
-    
-    - Teams 
-        - delete all default teams present there except the one named `azure`
-        - create new teams with as defined in the step 5 table with 
-            - Team name as in column `Dataverse Team`
-            - Team type `Microsoft Entra ID Security Group`
-            - Group name as in column `Security Group`
-            - Membership type `Members and guests`
-        
 
-    ### 
+    - Teams
+      - delete all default teams present there except the one named `azure`
+      - create new teams with as defined in the step 5 table with
+        - Team name as in column `Dataverse Team`
+        - Team type `Microsoft Entra ID Security Group`
+        - Group name as in column `Security Group`
+        - Membership type `Members and guests`
 
+    ###
 
+13. Add defaut logging.
 
+14. Add security groups and create snippets.
 
+15. [Set up MSAL Browser and Vite]() coming...
 
+16. ...
 
+17. ...
 
+18. ...
 
-9.  Add defaut logging.
+19. Provision mock json data
 
-10. Add security groups and create snippets.
-
-11. [Set up MSAL Browser and Vite]() coming...
-
-12. ...
-
-13. ...
-
-14. ...
-
-15. Provision mock json data
-
-16. [Set up Azure Cosmos DB to work with the MSAL token](https://github.com/AndrewElans/PowerPagesSPA-CosmosDB)
+20. [Set up Azure Cosmos DB to work with the MSAL token](https://github.com/AndrewElans/PowerPagesSPA-CosmosDB)
 
 Content is in progress...
