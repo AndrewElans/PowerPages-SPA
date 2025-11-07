@@ -138,7 +138,7 @@ Supplier management portal to provide a buyer/procurement proffesional with info
     
     Each page has a corresponding snipet. Snippets are stored in a new Dataverse table with the following structure:
 
-    | Name | az Val Admin | az Val ProcAll  | az Val FAOwner  | az Val Azure     | az Val Shared |
+    | Name | az Val Admin | az Val ProcAll  | az Val FAOwner  | az Val Azure     | az Val Common |
     |------|--------------|-----------------|-----------------|------------------|---------------|
     | nav  | json content | json content    | json content    | json content     | json content  |
 
@@ -282,20 +282,93 @@ Supplier management portal to provide a buyer/procurement proffesional with info
         - Display name `az Name`
         - Schema name `az_Name`
 
-    Add new columns az Val Admin, az Val ProcAll, az Val FAOwner, az Val Azure, az Val Shared with:
+    Add new columns `az Val Admin`, `az Val ProcAll`, `az Val FAOwner`, `az Val Azure`, `az Val Common` with:
     
     - Data type `Multiple lines of text`
     - Maximum character count 10000
     - Enable column security ON (except for az Val Azure)
     - Adjust Schema name to format `az_Val...`
 
-    Open Forms on this table -> select form Information (Main) -> Edit -> add Multiline text with component `Edit This Monaco editor is used in Power Pages Management App` for each of the created columns. I will show in a video...
+    Open Forms on this table -> select form Information (Main) -> Edit -> add Multiline text with component `Edit This Monaco editor is used in Power Pages Management App` for each of the created columns. 
+    
+    *Not complete description. I will show in a video*
 
-10. Add Snippets form on Power Pages Management app
+10. Edit Power Pages Management app 
+    
+    Go to make.powerapps.com -> Apps -> Power Pages Management -> Edit.
 
+    ### Add aa Snippets
 
+    Find and select `Web Templates form` on the left -> click on top `Add page` -> Dataverse table -> select `aa Snippet` -> Add
 
-10. Add this form to 
+    Now we can add and edit snippets directly in the app.
+
+    ### Add Teams 
+    
+    Select `aa Snippets form` added just now -> click on top `Add page` -> Dataverse table -> find and select `Team` -> Add
+
+    Click `Save and publish` on top right.
+
+11. Create user views
+
+    We will make custom user views to be able to call userQuery with Web API:
+    
+    - Teams user a member of
+    - Snippets user has access to
+
+    To be able to test your views in a browser, in a new tab go to make.powerapps.com -> setings cog on top right -> Developer resources -> copy Web API endpoint `https://250101.api.crm19.dynamics.com/api/data/v9.2` -> paste URL origin in a the url bar `https://250101.api.crm19.dynamics.com` to authenticate this endpoint.
+
+    ### New view `aa User Teams`
+
+    In Power Pages Management app -> select `Teams` on the left -> Edit columns -> remove `Business Unit` -> Apply -> click `Edit filters` -> click `Delete all filters` -> click `Add related entity` -> find and select `Users` -> select in a field `User` and operator `Equals current user` -> Apply -> Save as new view -> name `aa User Teams` -> Save -> Set as default view -> click `Manage and share views` -> click `...` of view `aa User Teams` -> Share -> in `Add user/team` find and select `azure` (our default tenant's team) -> add Permissions `Read` -> click Share -> Close -> copy from the url bar and take `viewid` from `...&viewid=a49fb75b-bdbb-f011-bbd3-6045bdeaa0cd...`.
+
+    Run this query in the browser `https://250101.api.crm19.dynamics.com/api/data/v9.2/teams?userQuery=a49fb75b-bdbb-f011-bbd3-6045bdeaa0cd`.
+
+    Response:
+    ```json
+    {
+        "@odata.context": "https://250101.api.crm19.dynamics.com/api/data/v9.2/$metadata#teams(name,teamid,teamtype,ownerid)",
+        "value": [
+            {
+            "@odata.etag": "W/\"2012344\"",
+            "ownerid": "ac077676-1fbb-f011-bbd3-6045bdeaa0cd",
+            "teamtype": 2,
+            "name": "admin",
+            "teamid": "ac077676-1fbb-f011-bbd3-6045bdeaa0cd"
+            },
+            {
+            "@odata.etag": "W/\"2011269\"",
+            "ownerid": "da4f12c4-c4b6-f011-bbd3-002248dc6fd6",
+            "teamtype": 0,
+            "name": "azure",
+            "teamid": "da4f12c4-c4b6-f011-bbd3-002248dc6fd6"
+            }
+        ]
+    }
+    ```
+
+    ### New view `aa User Snippets`
+
+    In Power Pages Management app -> select `aa Snippets` on the left -> Edit columns -> remove `Created On` -> Add columns -> add all custom created `aa Val..` columns -> Close -> Apply -> Save as new view -> name `aa User Snippets` -> Save -> Set as default view -> click `Manage and share views` -> click `...` of view `aa User Teams` -> Share -> in `Add user/team` find and select `azure` (our default tenant's team) -> add Permissions `Read` -> click Share -> Close -> copy from the url bar and take `viewid` from `...&viewid=f810968d-c7bb-f011-bbd3-6045bdeaa0cd...`.
+
+    Click `New` to add new record to the aa Snippets -> name `nav` -> Save and close.
+
+    Run this query in the browser `https://250101.api.crm19.dynamics.com/api/data/v9.2/aa_snippets?userQuery=f810968d-c7bb-f011-bbd3-6045bdeaa0cd`.
+
+    Response:
+    ```json
+    {
+        "@odata.context": "https://250101.api.crm19.dynamics.com/api/data/v9.2/$metadata#aa_snippets(statecode,aa_snippetid,aa_name,aa_valadmin,aa_valazure,aa_valcommon,aa_valfaowner,aa_valprocall)",
+        "value": [
+            {
+            "@odata.etag": "W/\"2090370\"",
+            "aa_name": "nav",
+            "statecode": 0,
+            "aa_snippetid": "270797bc-c7bb-f011-bbd3-6045bdeaa0cd"
+            }
+        ]
+    }
+    ```
 
 10. Setup Dataverse 
 
